@@ -11,17 +11,22 @@ function Home() {
   const router = useRouter();
 
   return (
-    <button
-      type="button"
-      onClick={() => {
-        updateCount({
-          data: {
-            increment: 2,
-          },
-        }).then(() => router.invalidate());
-      }}
-    >
-      Add to {state} {state}
-    </button>
+    <>
+      <button
+        type="button"
+        className="bg-red-500 p-1 rounded-md"
+        onClick={() => {
+          updateCount({
+            data: {
+              increment: 2,
+            },
+          }).then(() => router.invalidate());
+        }}
+      >
+        Add to {state} {state}
+      </button>
+
+      <div>Container</div>
+    </>
   );
 }
