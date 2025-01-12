@@ -9,3 +9,9 @@ watch
 ```
 npx @tailwindcss/cli -i ./app/styles/app.css -o ./app/styles/output.css --watch
 ```
+
+Deploy
+
+```
+sst deploy --stage production
+```
