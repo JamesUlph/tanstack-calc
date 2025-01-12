@@ -1,4 +1,5 @@
 import {
+  Link,
   Outlet,
   ScrollRestoration,
   createRootRoute,
@@ -7,8 +8,16 @@ import { Meta, Scripts } from '@tanstack/start';
 import type { ReactNode } from 'react';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import appCss from '~/styles/output.css?url';
+import { DefaultCatchBoundary } from '~/components/DefaultCatchBoundary';
 
 export const Route = createRootRoute({
+  errorComponent: (props) => {
+    return (
+      <RootDocument>
+        <DefaultCatchBoundary {...props} />
+      </RootDocument>
+    );
+  },
   head: () => ({
     meta: [
       {
@@ -42,9 +51,17 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
         <Meta />
       </head>
       <body>
+        <div>
+          <Link to="/scratch">Scratch</Link>
+          <Link to="/document-view-all">Docs</Link>
+          <Link to="/quickresolve">Quick</Link>
+          <Link to="/chat">Chat</Link>
+        </div>
         {children}
         <ScrollRestoration />
-        <TanStackRouterDevtools position="bottom-right" />
+        {process.env['NODE_ENV'] != 'production' && (
+          <TanStackRouterDevtools position="bottom-right" />
+        )}
         <Scripts />
       </body>
     </html>

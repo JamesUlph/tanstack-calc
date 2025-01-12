@@ -17,6 +17,7 @@ import { Route as scratchViewImport } from './routes/(scratch)/view'
 import { Route as scratchScratchImport } from './routes/(scratch)/scratch'
 import { Route as quickresolveQuickresolveImport } from './routes/(quickresolve)/quickresolve'
 import { Route as docsDocumentViewAllImport } from './routes/(docs)/document-view-all'
+import { Route as chatChatImport } from './routes/(chat)/chat'
 
 // Create/Update Routes
 
@@ -55,6 +56,12 @@ const docsDocumentViewAllRoute = docsDocumentViewAllImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const chatChatRoute = chatChatImport.update({
+  id: '/(chat)/chat',
+  path: '/chat',
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -71,6 +78,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof LayoutImport
+      parentRoute: typeof rootRoute
+    }
+    '/(chat)/chat': {
+      id: '/(chat)/chat'
+      path: '/chat'
+      fullPath: '/chat'
+      preLoaderRoute: typeof chatChatImport
       parentRoute: typeof rootRoute
     }
     '/(docs)/document-view-all': {
@@ -109,6 +123,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof LayoutRoute
+  '/chat': typeof chatChatRoute
   '/document-view-all': typeof docsDocumentViewAllRoute
   '/quickresolve': typeof quickresolveQuickresolveRoute
   '/scratch': typeof scratchScratchRoute
@@ -118,6 +133,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof LayoutRoute
+  '/chat': typeof chatChatRoute
   '/document-view-all': typeof docsDocumentViewAllRoute
   '/quickresolve': typeof quickresolveQuickresolveRoute
   '/scratch': typeof scratchScratchRoute
@@ -128,6 +144,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_layout': typeof LayoutRoute
+  '/(chat)/chat': typeof chatChatRoute
   '/(docs)/document-view-all': typeof docsDocumentViewAllRoute
   '/(quickresolve)/quickresolve': typeof quickresolveQuickresolveRoute
   '/(scratch)/scratch': typeof scratchScratchRoute
@@ -139,16 +156,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/chat'
     | '/document-view-all'
     | '/quickresolve'
     | '/scratch'
     | '/view'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/document-view-all' | '/quickresolve' | '/scratch' | '/view'
+  to:
+    | '/'
+    | ''
+    | '/chat'
+    | '/document-view-all'
+    | '/quickresolve'
+    | '/scratch'
+    | '/view'
   id:
     | '__root__'
     | '/'
     | '/_layout'
+    | '/(chat)/chat'
     | '/(docs)/document-view-all'
     | '/(quickresolve)/quickresolve'
     | '/(scratch)/scratch'
@@ -159,6 +185,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LayoutRoute: typeof LayoutRoute
+  chatChatRoute: typeof chatChatRoute
   docsDocumentViewAllRoute: typeof docsDocumentViewAllRoute
   quickresolveQuickresolveRoute: typeof quickresolveQuickresolveRoute
   scratchScratchRoute: typeof scratchScratchRoute
@@ -168,6 +195,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LayoutRoute: LayoutRoute,
+  chatChatRoute: chatChatRoute,
   docsDocumentViewAllRoute: docsDocumentViewAllRoute,
   quickresolveQuickresolveRoute: quickresolveQuickresolveRoute,
   scratchScratchRoute: scratchScratchRoute,
@@ -186,6 +214,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_layout",
+        "/(chat)/chat",
         "/(docs)/document-view-all",
         "/(quickresolve)/quickresolve",
         "/(scratch)/scratch",
@@ -197,6 +226,9 @@ export const routeTree = rootRoute
     },
     "/_layout": {
       "filePath": "_layout.tsx"
+    },
+    "/(chat)/chat": {
+      "filePath": "(chat)/chat.tsx"
     },
     "/(docs)/document-view-all": {
       "filePath": "(docs)/document-view-all.tsx"

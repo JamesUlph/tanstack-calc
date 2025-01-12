@@ -9,13 +9,14 @@ export default defineConfig({
     ],
   },
   server: {
-    compatibilityDate: '2024-11-19',
+    compatibilityDate: '2024-12-01',
     esbuild: {
       options: {
         target: 'ES2022',
       },
     },
     experimental: { asyncContext: true },
-    preset: 'node-server',
+    preset: 'aws-lambda',
+    awsLambda: { streaming: false },
   },
 });

@@ -1,4 +1,4 @@
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, useLoaderData } from '@tanstack/react-router';
 import {
   useForm,
   useFormContext,
@@ -17,7 +17,7 @@ export const Route = createFileRoute('/(quickresolve)/quickresolve')({
     console.log('loader');
     console.log('secret=', process.env.SECRET);
 
-    return {};
+    return { SECRET: process.env.SECRET, BASEADDRESS: process.env.BASEADDRESS };
   },
   component: RouteComponent,
 });
@@ -46,6 +46,7 @@ const schema = z.object({
 type IFormInput = z.infer<typeof schema>;
 
 function RouteComponent() {
+  const env = Route.useLoaderData();
   const methods = useForm<IFormInput>({
     resolver: zodResolver(schema),
     shouldFocusError: false,
@@ -55,7 +56,7 @@ function RouteComponent() {
 
   return (
     <div className="">
-      Hello "/quickresolve"!
+      Hello "/quickresolve"! SECRET={JSON.stringify(env)}
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
           <ResolvePanel className="mb-4">
